@@ -1,24 +1,24 @@
-import { existsSync, mkdirSync, copyFileSync } from 'fs'
-import { resolve, join, basename, dirname } from 'path'
+const fs = require("fs");
+const path = require("path");
 
 function copyFileToBuild(sourceFile, targetDir) {
-  const scriptDir = __dirname
-  const projectRootDir = resolve(scriptDir, '.')
-  console.log('scriptDir:', projectRootDir)
-  const sourcePath = join(projectRootDir, sourceFile)
-  const targetPath = join(
-    projectRootDir,
-    targetDir,
-    basename(sourceFile)
-  )
+	const scriptDir = __dirname;
+	const projectRootDir = path.resolve(scriptDir, ".");
+	console.log("scriptDir:", projectRootDir);
+	const sourcePath = path.join(projectRootDir, sourceFile);
+	const targetPath = path.join(
+		projectRootDir,
+		targetDir,
+		path.basename(sourceFile)
+	);
 
-  if (!existsSync(dirname(targetPath))) {
-    mkdirSync(dirname(targetPath), { recursive: true })
-  }
+	if (!fs.existsSync(path.dirname(targetPath))) {
+		fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+	}
 
-  copyFileSync(sourcePath, targetPath)
+	fs.copyFileSync(sourcePath, targetPath);
 
-  console.log(`Copied ${sourcePath} to ${targetPath}`)
+	console.log(`Copied ${sourcePath} to ${targetPath}`);
 }
 
-export default copyFileToBuild
+module.exports = copyFileToBuild;
