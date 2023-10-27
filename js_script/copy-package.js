@@ -1,24 +1,22 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs')
+const path = require('path')
 
-function copyFileToBuild(sourceFile, targetDir) {
-	const scriptDir = __dirname;
-	const projectRootDir = path.resolve(scriptDir, ".");
-	console.log("scriptDir:", projectRootDir);
-	const sourcePath = path.join(projectRootDir, sourceFile);
-	const targetPath = path.join(
-		projectRootDir,
-		targetDir,
-		path.basename(sourceFile)
-	);
+function copyFileToBuild(sourceFile, targetDir, workingDir) {
+  const projectRootDir = path.resolve(workingDir)
+  const sourcePath = path.join(projectRootDir, sourceFile)
+  const targetPath = path.join(
+    projectRootDir,
+    targetDir,
+    path.basename(sourceFile)
+  )
 
-	if (!fs.existsSync(path.dirname(targetPath))) {
-		fs.mkdirSync(path.dirname(targetPath), { recursive: true });
-	}
+  if (!fs.existsSync(path.dirname(targetPath))) {
+    fs.mkdirSync(path.dirname(targetPath), { recursive: true })
+  }
 
-	fs.copyFileSync(sourcePath, targetPath);
+  fs.copyFileSync(sourcePath, targetPath)
 
-	console.log(`Copied ${sourcePath} to ${targetPath}`);
+  console.log(`Copied ${sourcePath} to ${targetPath}`)
 }
 
-module.exports = copyFileToBuild;
+module.exports = copyFileToBuild
